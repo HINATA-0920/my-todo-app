@@ -7,26 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ここにcontainerクラスを追加 -->
-    <div class="container">
-        <h1>ToDoリスト</h1>
-        
-        <!-- タスク入力欄 -->
-        <input type="text" id="taskInput" placeholder="タスクを入力">
-
-        <!-- 優先順位選択 -->
-        <select id="priority">
-            <option value="1">1 - 高</option>
-            <option value="2">2 - 中</option>
-            <option value="3">3 - 低</option>
+    <h1>ToDoリスト</h1>
+    <div>
+        <input id="taskInput" type="text" placeholder="タスクを入力">
+        <select id="prioritySelect">
+            <option value="1 - 高">1 - 高</option>
+            <option value="2 - 中">2 - 中</option>
+            <option value="3 - 低">3 - 低</option>
         </select>
-
-        <!-- ボタン -->
-        <button onclick="addTask()">追加</button>
-        <button onclick="sortTasks()">優先順位順に並び替え</button>
+        <button id="addButton">追加</button>
+        <button id="sortButton">優先順位順に並び替え</button>
     </div>
+    <ul id="taskList"></ul>
 
-    <!-- JavaScriptファイル読み込み -->
     <script src="script.js"></script>
 </body>
 </html>

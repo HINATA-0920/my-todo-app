@@ -1,15 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const addButton = document.getElementById('addButton'); // 追加ボタン
-    const taskInput = document.getElementById('taskInput'); // タスク入力欄
-    const prioritySelect = document.getElementById('prioritySelect'); // 優先順位選択
-    const taskList = document.getElementById('taskList'); // タスクリスト
-    const sortButton = document.getElementById('sortButton'); // 並び替えボタン
+    const addButton = document.getElementById('addButton');
+    const taskInput = document.getElementById('taskInput');
+    const prioritySelect = document.getElementById('prioritySelect');
+    const taskList = document.getElementById('taskList');
+    const sortButton = document.getElementById('sortButton');
 
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || []; // 保存済みデータをロード
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
     // タスクを表示する関数
     function displayTasks() {
-        taskList.innerHTML = ''; // 一旦リストをクリア
+        taskList.innerHTML = '';
         tasks.forEach((task, index) => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
@@ -34,12 +34,12 @@ document.addEventListener('DOMContentLoaded', function () {
         tasks.push({ text: taskText, priority: priority });
         displayTasks();
 
-        taskInput.value = ''; // 入力欄をクリア
+        taskInput.value = '';
     });
 
     // タスク削除機能
     window.deleteTask = function (index) {
-        tasks.splice(index, 1); // 配列から該当タスクを削除
+        tasks.splice(index, 1);
         displayTasks();
     };
 
