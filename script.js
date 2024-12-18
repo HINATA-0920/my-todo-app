@@ -1,74 +1,59 @@
-const taskInput = document.getElementById("taskInput");
-const prioritySelect = document.getElementById("prioritySelect");
-const addButton = document.getElementById("addButton");
-const sortButton = document.getElementById("sortButton");
-const taskList = document.getElementById("taskList");
+document.addEventListener('DOMContentLoaded', function () {
+    const addButton = document.getElementById('addButton'); // 追加ボタン
+    const taskInput = document.getElementById('taskInput'); // タスク入力欄
+    const prioritySelect = document.getElementById('prioritySelect'); // 優先順位選択
+    const taskList = document.getElementById('taskList'); // タスクリスト
+    const sortButton = document.getElementById('sortButton'); // 並び替えボタン
 
-// タスクを追加する
-addButton.addEventListener("click", () => {
-    const taskText = taskInput.value.trim();
-    const priority = prioritySelect.value; // 優先順位を取得
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || []; // 保存済みデータをロード
 
-    if (taskText !== "") {
-        addTaskToList(taskText, priority);
-        taskInput.value = "";
-        prioritySelect.value = "1"; // 優先順位を初期化
-        saveTasks();
-    }
-});
-
-// タスクをリストに追加する関数
-function addTaskToList(taskText, priority) {
-    const li = document.createElement("li");
-    li.setAttribute("data-priority", priority); // 優先順位をデータ属性として保存
-    li.innerHTML = `
-        <span>[優先度 ${priority}] ${taskText}</span>
-        <button class="deleteButton">削除</button>
-    `;
-    taskList.appendChild(li);
-}
-
-// タスクを削除する
-taskList.addEventListener("click", (e) => {
-    if (e.target.classList.contains("deleteButton")) {
-        e.target.parentElement.remove();
-        saveTasks();
-    }
-});
-
-// 優先順位順に並び替える
-sortButton.addEventListener("click", () => {
-    const tasks = Array.from(taskList.querySelectorAll("li"));
-
-    tasks.sort((a, b) => {
-        const priorityA = parseInt(a.getAttribute("data-priority"));
-        const priorityB = parseInt(b.getAttribute("data-priority"));
-        return priorityA - priorityB; // 優先順位が低い順に並び替え
-    });
-
-    // 並び替えたタスクを再描画
-    taskList.innerHTML = "";
-    tasks.forEach(task => taskList.appendChild(task));
-
-    saveTasks(); // 並び替えた結果を保存
-});
-
-// タスクデータを保存する
-function saveTasks() {
-    const tasks = [];
-    taskList.querySelectorAll("li").forEach((li) => {
-        tasks.push({
-            text: li.textContent.replace("削除", "").trim(),
-            priority: li.getAttribute("data-priority")
+    // タスクを表示する関数
+    function displayTasks() {
+        taskList.innerHTML = ''; // 一旦リストをクリア
+        tasks.forEach((task, index) => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                【優先度: ${task.priority}】 ${task.text}
+                <button onclick="deleteTask(${index})">削除</button>
+            `;
+            taskList.appendChild(listItem);
         });
+        saveTasks();
+    }
+
+    // タスク追加機能
+    addButton.addEventListener('click', function () {
+        const taskText = taskInput.value.trim();
+        const priority = prioritySelect.value;
+
+        if (taskText === '') {
+            alert('タスクを入力してください！');
+            return;
+        }
+
+        tasks.push({ text: taskText, priority: priority });
+        displayTasks();
+
+        taskInput.value = ''; // 入力欄をクリア
     });
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-}
 
-// 保存されたデータを読み込む
-function loadTasks() {
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    tasks.forEach((task) => addTaskToList(task.text, task.priority));
-}
+    // タスク削除機能
+    window.deleteTask = function (index) {
+        tasks.splice(index, 1); // 配列から該当タスクを削除
+        displayTasks();
+    };
 
-loadTasks(); // ページ読み込み時に保存データを読み込む
+    // 優先順位順に並び替え
+    sortButton.addEventListener('click', function () {
+        tasks.sort((a, b) => a.priority.localeCompare(b.priority));
+        displayTasks();
+    });
+
+    // タスクをローカルストレージに保存する関数
+    function saveTasks() {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // ページ読み込み時にタスクを表示
+    displayTasks();
+});
