@@ -1,87 +1,73 @@
-/* 基本スタイル */
+/* 全体の背景を冬のデザインに */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
+    background-image: url('https://your-image-link.com/snow-pattern.jpg'); /* 雪の背景画像 */
+    background-size: cover; /* 背景を画面いっぱいに表示 */
+    background-attachment: fixed; /* スクロールしても固定 */
+    background-color: #f0f8ff; /* 画像が表示されない場合の予備色 */
+    color: #333; /* 文字色を暗めに */
+    font-family: 'Arial', sans-serif;
 }
 
+/* ヘッダー */
 h1 {
-    color: #5c6bc0;
+    color: #4682b4; /* 冬っぽいスチールブルー */
+    text-align: center;
+    font-size: 2.5rem;
+    text-shadow: 1px 1px 2px #d0e6f9; /* うっすらとした影 */
 }
 
-input, button {
+/* 入力フィールド */
+input[type="text"] {
+    width: 70%;
     padding: 10px;
-    font-size: 1em;
-    margin: 5px;
+    margin: 10px auto;
+    display: block;
+    border: 2px solid #b0c4de;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* ボタン */
+button {
+    background-color: #4682b4; /* スチールブルー */
+    color: white;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
-}
-
-button {
-    background-color: #5c6bc0;
-    color: white;
     cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #3949ab;
+    background-color: #5f9ea0; /* 冬っぽいグリーンがかった青 */
 }
 
+/* タスクリスト */
 ul {
     list-style: none;
     padding: 0;
+    margin: 20px auto;
+    width: 80%;
 }
 
 li {
-    background: white;
-    margin: 10px auto;
+    background-color: #e0f2f7;
+    margin: 5px 0;
     padding: 10px;
-    width: 60%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border: 1px solid #b0c4de;
     border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.deleteButton {
-    background-color: #e53935;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.deleteButton:hover {
-    background-color: #b71c1c;
-}
-
-/* スマホ対応：画面幅が600px以下の場合 */
-@media screen and (max-width: 600px) {
-    body {
-        padding: 10px;
+/* スマホ対応 */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
     }
 
-    input, button {
-        width: 90%; /* 幅を画面に合わせる */
-        margin: 5px auto;
-    }
-
-    ul {
-        padding: 0;
-    }
-
-    li {
+    input[type="text"], button {
         width: 90%;
-        font-size: 0.9em; /* テキストを小さく */
-        flex-direction: column; /* 縦に並べる */
-        text-align: center;
-    }
-
-    .deleteButton {
-        margin-top: 5px; /* 削除ボタンの間隔 */
     }
 }
